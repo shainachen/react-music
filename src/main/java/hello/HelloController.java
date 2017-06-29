@@ -3,41 +3,38 @@ package hello;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 @RestController
-
 public class HelloController {
 
     @RequestMapping("/")
     public String index() {
-        return "Hello!";
+        return "React Music";
     }
 
-    @RequestMapping("/albums")
+    @RequestMapping(value = "/albums")
     public String index1() throws JSONException {
-        String filename = "lib/AlbumList.csv";
-        String line = "";
+        ClassPathResource filename = new ClassPathResource("AlbumList.csv");
         String cvsSplitBy = ",";
         JSONObject finalAlbums = new JSONObject();
-
-        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
-
+        String data;
+        try {
+            byte[] albumData = FileCopyUtils.copyToByteArray(filename.getInputStream());
+            data = new String(albumData, StandardCharsets.UTF_8);
             JSONArray albumList = new JSONArray();
-
+            String[] rows = data.split("\r\n");
             int counter = 0;
-
-            while ((line = br.readLine()) != null) {
-
+            for(String a: rows) {
                 if (counter != 0) {
-
-                    // use comma as separator
-                    String[] albums = line.split(cvsSplitBy);
+                    String[] albums = a.split(cvsSplitBy);
 
                     JSONObject myAlbum = new JSONObject();
                     myAlbum.put("genre", albums[3]);
@@ -45,22 +42,16 @@ public class HelloController {
                     myAlbum.put("artist", albums[1]);
                     myAlbum.put("name", albums[0]);
 
-
                     albumList.put(myAlbum);
                 }
                 counter++;
-
             }
-
             finalAlbums.put("albums", albumList);
-
-
-            //System.out.print(finalAlbums);
-
-        } catch (IOException e) {
+        }
+       catch (IOException e) {
             e.printStackTrace();
+            finalAlbums.put("error", "reading file");
         }
         return finalAlbums.toString();
-
     }
 }
