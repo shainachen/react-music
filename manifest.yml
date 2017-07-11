@@ -3,4 +3,3 @@ applications:
 - name: react-music
   memory: 1G
   path: build/libs/gs-spring-boot-0.1.0.jar
-

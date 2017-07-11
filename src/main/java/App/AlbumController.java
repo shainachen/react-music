@@ -1,27 +1,28 @@
-package hello;
+package App;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 @RestController
-public class HelloController {
+public class AlbumController {
+
+
 
     @RequestMapping("/")
     public String index() {
         return "React Music";
     }
 
-    @RequestMapping(value = "/albums")
-    public String index1() throws JSONException {
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.GET, value = "/albums")
+    public String getAlbums() throws JSONException {
         ClassPathResource filename = new ClassPathResource("AlbumList.csv");
         String cvsSplitBy = ",";
         JSONObject finalAlbums = new JSONObject();
@@ -55,3 +56,5 @@ public class HelloController {
         return finalAlbums.toString();
     }
 }
+
+
