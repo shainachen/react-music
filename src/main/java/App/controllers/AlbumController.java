@@ -17,6 +17,7 @@ import java.nio.charset.StandardCharsets;
 import javax.annotation.PostConstruct;
 
 @RestController
+@RequestMapping(value = "/albums")
 public class AlbumController {
     private AlbumRepository repository;
 
@@ -25,15 +26,20 @@ public class AlbumController {
         this.repository = newRepository;
     }
 
-    @RequestMapping("/")
-    public String index() {
-        return "React Music";
-    }
-
     @CrossOrigin
-    @RequestMapping(method = RequestMethod.GET, value = "/albums")
+    @RequestMapping(method = RequestMethod.GET)
     public Iterable<Album> getAlbums() throws JSONException {
         return repository.findAll();
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public void deleteById(@PathVariable String id) {
+        repository.delete(id);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public Album getById(@PathVariable String id) {
+        return repository.findOne(id);
     }
 
     @PostConstruct
