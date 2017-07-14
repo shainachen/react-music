@@ -2,6 +2,8 @@ package App.controllers;
 
 import App.repositories.AlbumRepository;
 import App.domain.Album;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jdk.nashorn.internal.parser.JSONParser;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,6 +17,9 @@ import java.nio.charset.StandardCharsets;
 
 
 import javax.annotation.PostConstruct;
+import javax.validation.Valid;
+
+import static org.springframework.data.repository.init.ResourceReader.Type.JSON;
 
 @RestController
 @RequestMapping(value = "/albums")
@@ -35,6 +40,13 @@ public class AlbumController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteById(@PathVariable String id) {
         repository.delete(id);
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public Album add(@RequestBody @Valid String album) {
+        JSONObject albumJSON = new JSONObject(album);
+        Album newAlbum = new Album(albumJSON.getString("name"), albumJSON.getString("artist"), albumJSON.getString("year"), albumJSON.getString("genre"));
+        return repository.save(newAlbum);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
