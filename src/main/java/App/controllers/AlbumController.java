@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.repository.Repository;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,6 +48,18 @@ public class AlbumController {
         JSONObject albumJSON = new JSONObject(album);
         Album newAlbum = new Album(albumJSON.getString("name"), albumJSON.getString("artist"), albumJSON.getString("year"), albumJSON.getString("genre"));
         return repository.save(newAlbum);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public Album update(@PathVariable String id, @RequestBody @Valid String album) {
+        JSONObject albumJSON = new JSONObject(album);
+        Album updatedAlbum = new Album(albumJSON.getString("name"), albumJSON.getString("artist"), albumJSON.getString("year"), albumJSON.getString("genre"));
+        Album albumToUpdate = repository.findOne(id);
+        albumToUpdate.setName(updatedAlbum.getName());
+        albumToUpdate.setYear(updatedAlbum.getYear());
+        albumToUpdate.setGenre(updatedAlbum.getGenre());
+        albumToUpdate.setArtist(updatedAlbum.getArtist());
+        return repository.save(albumToUpdate);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
