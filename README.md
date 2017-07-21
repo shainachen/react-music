@@ -30,7 +30,7 @@ $ cf push YOUR_APP_NAME
 ~~~
 
 Access your application (built with the specifications from the 'manifest.yml' file) by curling the URL given near the end
-of the output from the command.
+of the output from the command. Access the raw data by curling the `/albums` endpoint.
 
 To run the full React Music Application, be sure to push the [frontend](https://github.com/shainachen/react-music-js) to
 Cloud Foundry, as well. You will then be ready to add services!
