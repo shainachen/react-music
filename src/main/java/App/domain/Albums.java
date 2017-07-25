@@ -17,6 +17,7 @@ public class Albums {
 
     @Column(name = "id")
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
 
     public Albums() {}
@@ -68,6 +69,4 @@ public class Albums {
     public void setGenre(String genre) {
         this.genre = genre;
     }
-
-
 }
