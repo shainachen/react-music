@@ -1,11 +1,13 @@
 package App.repositories;
 
-import App.domain.Album;
+import App.domain.Albums;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface AlbumRepository extends CrudRepository<Album, String> {
-    Album findByArtist(String artist);
-    List<Album> findByGenre(String genre);
+@Repository
+public interface AlbumRepository extends CrudRepository<Albums, String> {
+    Albums findByArtist(String artist);
+    List<Albums> findByGenre(String genre);
 }

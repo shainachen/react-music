@@ -1,23 +1,28 @@
 package App.domain;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
-public class Album {
+public class Albums {
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "artist")
     private String artist;
+
+    @Column(name = "year")
     private String year;
+
+    @Column(name = "genre")
     private String genre;
+
+    @Column(name = "id")
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
     private String id;
 
-    public Album () {}
+    public Albums() {}
 
 
-    public Album(String name, String artist, String year, String genre) {
+    public Albums(String name, String artist, String year, String genre) {
         this.name = name;
         this.artist = artist;
         this.year = year;

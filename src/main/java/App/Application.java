@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class Application {
-    //public static CrudRepository<Album, String> repository;
+    //public static CrudRepository<Albums, String> repository;
     public static void main(String[] args){
         SpringApplication.run(Application.class, args);
     }
@@ -27,4 +27,5 @@ public class Application {
             }
         } ;
     }
+
 }
