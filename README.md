@@ -12,17 +12,21 @@ To begin, clone this repository onto your machine.
 
 ## Running the Application Locally
 
-Start the application by navigating into the project directory and using the following command:
+Start the application by navigating into the project directory. Use the following command specifying either `mysql` or
+`in-memory` as the <profile_name>:
+
 ~~~
-$ ./gradlew clean assemble && java -jar build/libs/gs-spring-boot-0.1.0.jar
+$ ./gradlew clean assemble && java -jar -Dspring.profiles.active=<profile_name> build/libs/gs-spring-boot-0.1.0.jar
 ~~~
 
-The application will be started on the default port localhost:8080/.
+If no profile is specified, `in-memory` will be used. The application will be started on the default port localhost:8080/.
 
 ## Deploying the Application to Cloud Foundry
 
 Install the 'cf' [command-line interface for Cloud Foundry](http://docs.cloudfoundry.org/cf-cli/), target a Cloud Foundry instance,
-and log in to Cloud Foundry. Then, the application can be built and pushed with these commands:
+and log in to Cloud Foundry. The application will find the database service to which it is bound and configure the
+corresponding Spring profile. If MySQL is not bound to the app, the `in-memory` datasource will be used. Then, the 
+application can be built and pushed with these commands:
 
 ~~~
 $ ./gradlew clean assemble

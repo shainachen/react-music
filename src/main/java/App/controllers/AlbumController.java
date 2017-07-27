@@ -5,20 +5,13 @@ import App.repositories.AlbumRepository;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.PostConstruct;
 import javax.validation.Valid;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 @RestController
 @RequestMapping(value = "/albums")
 public class AlbumController {
-    private AlbumRepository repository;
-
+    public static AlbumRepository repository;
     @Autowired
     public AlbumController(AlbumRepository newRepository) {
         this.repository = newRepository;
@@ -63,32 +56,6 @@ public class AlbumController {
     public Albums getById(@PathVariable String id) {
         return repository.findOne(id);
     }
-
-
-    @PostConstruct
-    public void parseJSON(){
-        ClassPathResource filename = new ClassPathResource("AlbumList.csv");
-        String cvsSplitBy = ",";
-        String data;
-        try {
-            byte[] albumData = FileCopyUtils.copyToByteArray(filename.getInputStream());
-            data = new String(albumData, StandardCharsets.UTF_8);
-            String[] rows = data.split("\r\n");
-            int counter = 0;
-            for(String a: rows) {
-                if (counter != 0) {
-                    String[] albums = a.split(cvsSplitBy);
-                    Albums albumInstance = new Albums(albums[0], albums[1], albums[2], albums[3]);
-                    repository.save(albumInstance);
-                }
-                counter++;
-            }
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 }
 
 
