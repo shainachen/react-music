@@ -1,5 +1,7 @@
 package App.configuration;
 
+import javax.sql.DataSource;
+
 public interface DatasourceConfig {
-    String setup();
+    DataSource dataSource();
 }

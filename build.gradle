@@ -32,16 +32,24 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
+    //Spring Boot
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile("org.springframework.boot:spring-boot-starter-web") {
         exclude module: "spring-boot-starter-tomcat"
     }
+    //Cloud Connectors
+    compile 'org.springframework.cloud:spring-cloud-localconfig-connector:1.2.4.RELEASE'
+    compile 'org.springframework.cloud:spring-cloud-cloudfoundry-connector:1.2.4.RELEASE'
+    compile 'org.springframework.cloud:spring-cloud-spring-service-connector:1.2.4.RELEASE'
+
+    //JPA Persistence
     compile "commons-dbcp:commons-dbcp"
     runtime "com.h2database:h2"
     runtime "mysql:mysql-connector-java"
     compile('org.mariadb.jdbc:mariadb-java-client:2.0.3')
     compile('mysql:mysql-connector-java')
     compile("com.h2database:h2")
+
     compile("org.springframework.boot:spring-boot-starter-jetty")
     compile group: 'org.json', name: 'json', version: '20170516'
     compile("org.springframework.boot:spring-boot-starter-actuator")
