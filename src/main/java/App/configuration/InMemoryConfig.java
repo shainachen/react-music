@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 @Component
-@Profile("!mysqlcloud")
+@Profile({"in-memory"})
 public class InMemoryConfig implements DatasourceConfig {
 
     @Override
