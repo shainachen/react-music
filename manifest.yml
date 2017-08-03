@@ -4,4 +4,4 @@ applications:
   memory: 1G
   path: build/libs/gs-spring-boot-0.1.0.jar
   env:
-    JAVA_OPTS: -Dspring.profiles.active=mysqlcloud
+    JAVA_OPTS: -Dspring.profiles.active=in-memory
