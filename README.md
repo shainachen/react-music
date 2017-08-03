@@ -42,10 +42,10 @@ of the output from the command. Access the raw data by curling the `/albums` end
 To run the full React Music Application, be sure to push the [frontend](https://github.com/shainachen/react-music-js) to
 Cloud Foundry, as well. You will then be ready to add services!
 
-##Creating and Binding Services
+## Creating and Binding Services
 You can create and bind database services to the application with the instructions below.
 
-###Bind a Service
+### Bind a Service
 If your Cloud Foundry service provider offers persistence services on its platform, you can do the following
 to create and bind a service that is managed by the platform:
 ~~~
@@ -57,17 +57,17 @@ $ cf create-service <service> <service plan> <service name>
 $ cf bind-service <app name> <service name>
 ~~~
 
-###Set Up a Database
+### Set Up a Database
 Use [Workbench](https://www.mysql.com/products/workbench/) or another mySQL GUI to set up your database. Connect your GUI to
 the service instance by inputting the service instance credentials (`connection name`, `username`, `password`) in the GUI. 
 ![Example Page of Setting Up Database](https://dev.mysql.com/doc/workbench/en/images/wb-mysql-connections-setup-new-connection.png)
-###Load Data
+### Load Data
 To load data into your GUI, do the following:
 1. Import the data from the CSV file located at `./src/resources/AlbumList.csv` into the GUI. Every column name should be a `String`.
 2. Name your table `albums`
 3. Add another column called `id`. Set the datatype to `INT` and select: `PRIMARY KEY`, `AUTO-INCREMENT`.
 
-###Configure Spring Application
+### Configure Spring Application
 Then, locate the following variables in `./src/resources/application-mysqlcloud.properties` **and** `./src/resources/application-mysqllocal.properties`:
 * `url`
 * `username`
@@ -81,7 +81,7 @@ Then, in your `manifest.yml` file, replace the current `JAVA_OPTS` line to:
 $ JAVA_OPTS: -Dspring.profiles.active=mysqlcloud
 ~~~
 
-###Run the Application with Service Instance
+### Run the Application with Service Instance
 
 Do the following to run the application with the service:
 ~~~
@@ -93,7 +93,7 @@ $ ./gradlew clean assemble && java -jar -Dspring.profiles.active=mysqllocal buil
 $ cf push <app name>
 ~~~
 
-##Endpoints
+## Endpoints
 
 React Music contains different endpoints that you can curl:
 
