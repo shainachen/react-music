@@ -60,7 +60,7 @@ $ cf bind-service <app name> <service name>
 ###Set Up a Database
 Use [Workbench](https://www.mysql.com/products/workbench/) or another mySQL GUI to set up your database. Connect your GUI to
 the service instance by inputting the service instance credentials (`connection name`, `username`, `password`) in the GUI. 
-![Example Page of Setting Up Database](https://drive.google.com/file/d/0B6i5vY2h32wvWDdfVUI5R3BZUzQ/view?usp=sharing)
+![Example Page of Setting Up Database](https://dev.mysql.com/doc/workbench/en/images/wb-mysql-connections-setup-new-connection.png)
 ###Load Data
 To load data into your GUI, do the following:
 1. Import the data from the CSV file located at `./src/resources/AlbumList.csv` into the GUI. Every column name should be a `String`.
