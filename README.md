@@ -19,14 +19,14 @@ Start the application by navigating into the project directory. Use the followin
 $ ./gradlew clean assemble && java -jar -Dspring.profiles.active=<profile_name> build/libs/gs-spring-boot-0.1.0.jar
 ~~~
 
-If no profile is specified, `in-memory` will be used. If `mysqllocal` is specified, the database server must be started separately. See **Creating and Binding Services** below for guidance on
-setting up `mysqllocal`.
+If `mysqllocal` is specified, the database server must be started separately. See **Creating and Binding Services** below for guidance on
+setting up `mysqllocal`. If no profile is specified, `in-memory` will be used.
 The application will be started on the default port `localhost:8080/`.
 
 ## Deploying the Application to Cloud Foundry
 
 Install the 'cf' [command-line interface for Cloud Foundry](http://docs.cloudfoundry.org/cf-cli/), log in to Cloud Foundry, and target a Cloud Foundry instance. The application will find the database service to which it is bound and configure the
-corresponding Spring profile. The application defaults to the `in-memory` datasource will be used. To use `mysqlcloud`, refer to **Creating and Binding Services**
+corresponding Spring profile. The application defaults to the `in-memory` datasource. To use `mysqlcloud`, refer to **Creating and Binding Services**
 below. 
 
 The application can be built and pushed with these commands:
@@ -42,10 +42,10 @@ of the output from the command. Access the raw data by curling the `/albums` end
 To run the full React Music Application, be sure to push the [frontend](https://github.com/shainachen/react-music-js) to
 Cloud Foundry, as well. You will then be ready to add services!
 
-## Creating and Binding Services
-You can create and bind database services to the application with the instructions below.
+## Creating and Configuring Services
+You can create and configure database services to the application with the instructions below.
 
-### Bind a Service
+### Create and Bind a Service
 If your Cloud Foundry service provider offers persistence services on its platform, you can do the following
 to create and bind a service that is managed by the platform:
 ~~~
@@ -58,13 +58,13 @@ $ cf bind-service <app name> <service name>
 ~~~
 
 ### Set Up a Database
-Use [Workbench](https://www.mysql.com/products/workbench/) or another mySQL GUI to set up your database. Connect your GUI to
+Use [Workbench](https://www.mysql.com/products/workbench/) or another MySQL GUI to set up your database. Connect your GUI to
 the service instance by inputting the service instance credentials (`connection name`, `username`, `password`) in the GUI. 
 ![Example Page of Setting Up Database](https://dev.mysql.com/doc/workbench/en/images/wb-mysql-connections-setup-new-connection.png)
 ### Load Data
 To load data into your GUI, do the following:
 1. Import the data from the CSV file located at `./src/resources/AlbumList.csv` into the GUI. Every column name should be a `String`.
-2. Name your table `albums`
+2. Name your table `albums`.
 3. Add another column called `id`. Set the datatype to `INT` and select: `PRIMARY KEY`, `AUTO-INCREMENT`.
 
 ### Configure Spring Application
@@ -75,7 +75,7 @@ Then, locate the following variables in `./src/resources/application-mysqlcloud.
 
 and replace them with the `url`, `username`, and `password` of your service instance. 
 
-Then, in your `manifest.yml` file, replace the current `JAVA_OPTS` line to: 
+Then, in your `manifest.yml` file, replace the `JAVA_OPTS` line with: 
 ~~~
 # Changes active profile to mysqlcloud
 $ JAVA_OPTS: -Dspring.profiles.active=mysqlcloud
